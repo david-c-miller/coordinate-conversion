@@ -1,0 +1,109 @@
+#!/usr/bin/make
+
+#############################################################################
+#  Copyright 2016 David C. Miller                                           #
+#                                                                           #
+#  Licensed under the Apache License, Version 2.0 (the "License");          #
+#  you may not use this file except in compliance with the License.         #
+#  You may obtain a copy of the License at                                  #
+#                                                                           #
+#  http://www.apache.org/licenses/LICENSE-2.0                               #
+#                                                                           #
+#  Unless required by applicable law or agreed to in writing, software      #
+#  distributed under the License is distributed on an "AS IS" BASIS,        #
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. #
+#  See the License for the specific language governing permissions and      #
+#  limitations under the License.                                           #
+#############################################################################
+
+# makefile include file
+# this file should be edited for an indivdiual system or varying needs
+
+######################
+#     Compilers      #
+######################
+
+# change this to match your system settings
+CXX=g++
+
+# general flags for all compilers
+# debug flags are used by default
+# use make final to use the final flags
+FLAGS_BASE=-I$(IDIR) -I$(SDIR) -ansi -Wall -Wextra -pedantic\
+	-Werror -Wno-error=unused-parameter -Wno-error=unused-variable\
+	$(WARN_FLAG)
+
+# optimization flags
+OFLAG_DEBUG=-O0 -g3 -pg
+OFLAG_FINAL=-O3 
+
+# these are used to ensure better portability
+# this can be removed above (or just get rid of
+# -Werror in FLAGS_BASE)
+WARN_FLAG=\
+-Wmaybe-uninitialized\
+-Wfloat-equal\
+-Wnarrowing\
+-Wunused\
+-Wunknown-pragmas\
+-Wwrite-strings\
+-Winit-self\
+-Wcast-align\
+-Wcast-qual\
+-Wpointer-arith\
+-Wstrict-aliasing\
+-Wmissing-declarations\
+-Wmissing-include-dirs\
+-Wno-unused-parameter\
+-Wuninitialized\
+-Wcast-align\
+-Wcast-qual\
+-Wdisabled-optimization\
+-Wformat=2\
+-Wlogical-op\
+-Wredundant-decls\
+-Wshadow\
+-Wstrict-overflow=4\
+-Wswitch-default\
+-Wundef\
+-Wno-unused\
+-Wsign-conversion\
+-Wsuggest-attribute=pure\
+-Wsuggest-attribute=const\
+-Wsuggest-attribute=noreturn\
+-Wsuggest-attribute=format\
+-Wmissing-format-attribute\
+-Wtype-limits\
+-Wconversion\
+-Wsign-compare\
+-Wlogical-op\
+-Wmissing-field-initializers\
+-Wno-multichar\
+-Winline
+
+# library include flags
+LDFLAGS=
+
+# additional c specific options
+CXXFLAGS_BASE=-std=c++98
+CXXFLAGS_DEBUG=$(CFLAGS_BASE)
+CXXFLAGS_FINAL=$(CFLAGS_BASE)
+
+########################################################
+# The following is defined on a project specific basis #
+########################################################
+# these definitions should NOT contain file suffix but
+# should just refer to the .cpp file with int main(...)
+_BIN = vasp2coord vasp2xyz vasp2siesta xyz2siesta vasp2vasp
+
+# all future definitions SHOULD include file suffix
+# header files and class headers
+_DEPS = dec.h header.h elements.h exceptions.h
+_CLASS = Structure.h Atom.h Lattice.h Handle.h
+
+# object (.o) files to be built (including class files
+# with a source .cpp file)
+_CXXOBJ = read.o write.o Structure.o Atom.o core.o functions.o Lattice.o Handle.o formatting.o
+
+# change to the local of desired installation (default is /usr/local/bin)
+INSTALLDIR:=/usr/local/bin
