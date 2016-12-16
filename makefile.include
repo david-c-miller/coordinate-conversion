@@ -24,14 +24,14 @@
 ######################
 
 # change this to match your system settings
-CXX=g++-4.7
+CXX=g++
 
 # general flags for all compilers
 # debug flags are used by default
 # use make final to use the final flags
 FLAGS_BASE=-I$(IDIR) -I$(SDIR) -ansi -Wall -Wextra -pedantic\
 	-Werror -Wno-error=unused-parameter -Wno-error=unused-variable\
-	#$(WARN_FLAG)
+	$(WARN_FLAG)
 
 # optimization flags
 OFLAG_DEBUG=-O0 -g3 -pg

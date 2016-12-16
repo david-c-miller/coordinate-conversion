@@ -258,6 +258,7 @@ namespace Read
   }
 #endif
 
+#if 0
   int readCOORD(Structure& syst, istream& ist)
   {
     string name, lbuf, junk;
@@ -295,4 +296,5 @@ namespace Read
 
     return 1;
   }
+#endif
 }
